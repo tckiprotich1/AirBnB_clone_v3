@@ -78,41 +78,14 @@ class DBStorage:
             calls remove() on private session attribute (self.session)
         """
         self.__session.remove()
+# start here for task 2
+def add(self, obj):
+        cls_name = obj.__class__.__name__
+        if cls_name not in self._data:
+            self._data[cls_name] = {}
+        self._data[cls_name][obj.id] = obj
 
     def get(self, cls, id):
-        """ retrieves one object """
-        try:
-            obj_dict = {}
-            if cls:
-                obj_class = self.__session.query(self.CNC.get(cls)).all()
-                for item in obj_class:
-                    obj_dict[item.id] = item
-            return obj_dict[id]
-        except:
-            return None
-
-    def count(self, cls=None):
-        """
-Returns the number of objects in storage matching the given class. If no class is passed, returns the count of all objects in storage.
-        """
-        def count(self, cls=None):
-    # Initialize an empty dictionary to store objects
-    obj_dict = {}
-    
-    # If a specific class is provided, query for objects of that class only
-    if cls:
-        obj_class = self.__session.query(self.CNC.get(cls)).all()
-        for item in obj_class:
-            obj_dict[item.id] = item
-    else:
-        # Otherwise, loop through all registered classes and query for their objects
-        for cls_name in self.CNC:
-            # Skip the BaseModel class
-            if cls_name == 'BaseModel':
-                continue
-            obj_class = self.__session.query(self.CNC.get(cls_name)).all()
-            for item in obj_class:
-                obj_dict[item.id] = item
-    
-    # Return the count of objects in the dictionary
-    return len(obj_dict)
+        if cls.__name__ in self._data and id in self._data[cls.__name__]:
+            return self._data[cls.__name__][id]
+        return None
