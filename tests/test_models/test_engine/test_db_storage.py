@@ -40,8 +40,9 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine /'
+                                    'test_db_storage.py'])
+
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -54,10 +55,10 @@ test_db_storage.py'])
 
     def test_db_storage_class_docstring(self):
         """Test for the DBStorage class docstring"""
-        self.assertIsNot(DBStorage.__doc__, None,
-                         "DBStorage class needs a docstring")
-        self.assertTrue(len(DBStorage.__doc__) >= 1,
-                        "DBStorage class needs a docstring")
+        self.assertIsNot(DBStorage.__doc__, None, "DBStorage"
+                         "class needs a docstring")
+        self.assertTrue(len(DBStorage.__doc__) >= 1, "DBStorage"
+                        "class needs a docstring")
 
     def test_dbs_func_docstrings(self):
         """Test for the presence of docstrings in DBStorage methods"""
@@ -99,7 +100,7 @@ class TestFileStorage(unittest.TestCase):
         # Load the database from file
         with open(models.storage._FileStorage__file_path, 'r') as f:
             data = json.load(f)
-        # Check that the object is in the loaded data
+# Check that the object is in the loaded data
         obj_dict = obj.to_dict()
         self.assertIn(obj_dict['id'], data['User'].keys())
         self.assertEqual(data['User'][obj_dict['id']], obj_dict)
