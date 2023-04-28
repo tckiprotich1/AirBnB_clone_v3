@@ -68,33 +68,3 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-# Path: models/engine/db_storage.py
-# Compare this snippet from models/engine/db_storage.py:
-
-    def __init__(self, path):
-        self._path = path
-        self._data = {}
-
-    def add(self, obj):
-        cls_name = obj.__class__.__name__
-        if cls_name not in self._data:
-            self._data[cls_name] = {}
-        self._data[cls_name][obj.id] = obj
-        with open(self._path, 'w') as f:
-            json.dump(self._data, f)
-
-    def get(self, cls, id):
-        with open(self._path, 'r') as f:
-            self._data = json.load(f)
-        if cls.__name__ in self._data and id in self._data[cls.__name__]:
-            return self._data[cls.__name__][id]
-        return None
-
-    def count(self, cls=None):
-        with open(self._path, 'r') as f:
-            self._data = json.load(f)
-        if cls is not None:
-            if cls.__name__ in self._data:
-                return len(self._data[cls.__name__])
-            return 0
-        return sum(len(self._data[cls_name]) for cls_name in self._data)
