@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" Module for app.py """
+""" Module for app.py
+    This module creates an instance of Flask 
+ """
 from flask import Flask, Blueprint, jsonify
 import os
 from models import storage
@@ -23,7 +25,7 @@ def teardown_appcontext(self):
 def not_found(error):
     ''' handles 404 error and gives json formatted response '''
     return make_response(jsonify({'error': 'Not found'}), 404)
-    
+
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     port = int(os.getenv('HBNB_API_PORT', 5000))
