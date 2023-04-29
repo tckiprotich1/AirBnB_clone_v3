@@ -8,3 +8,14 @@ from flask import jsonify
 def status():
     """ Returns a JSON """
     return jsonify({"status": "OK"})
+
+# Route: /api/v1/stats
+@app_views.route('/stats', strict_slashes=False)
+def stats():
+    """ Returns a JSON """
+    from models import storage
+    classes = {"Amenity": "amenities", "City": "cities", "Place": "places",
+               "Review": "reviews", "State": "states", "User": "users"}
+    for key, value in classes.items():
+        classes[key] = storage.count(key)
+    return jsonify(classes)
