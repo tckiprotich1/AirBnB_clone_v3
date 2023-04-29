@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Module for app.py """
 from flask import Flask, Blueprint, jsonify
+import os
+from models import storage
 # importing app_views from api.v1.views
 from api.v1.views import app_views
 
