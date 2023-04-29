@@ -102,9 +102,7 @@ class TestFileStorage(unittest.TestCase):
         # Check that the object is in the loaded data
         obj_dict = obj.to_dict()
         self.assertIn(obj_dict['id'], data['User'].keys())
-<<<<<<< Updated upstream
         self.assertEqual(data['User'][obj_dict['id']], obj_dict)
-=======
         self.assertEqual(data['User'][obj_dict['id']], obj_dict)
 
 """
@@ -154,4 +152,3 @@ class TestFileStorage(unittest.TestCase):
 
 
 
->>>>>>> Stashed changes
