@@ -102,4 +102,56 @@ class TestFileStorage(unittest.TestCase):
         # Check that the object is in the loaded data
         obj_dict = obj.to_dict()
         self.assertIn(obj_dict['id'], data['User'].keys())
+<<<<<<< Updated upstream
         self.assertEqual(data['User'][obj_dict['id']], obj_dict)
+=======
+        self.assertEqual(data['User'][obj_dict['id']], obj_dict)
+
+"""
+ test objects  instance to the database, then call the get method with its ID, and expect to get back the same instance.
+"""
+    def test_get_method_with_valid_id(self):
+        # Arrange
+        db = Database()
+        obj = MyObject(id=1, name="test")
+        db.add(obj)
+
+        # Act
+        result = db.get(MyObject, 1)
+
+        # Assert
+        self.assertEqual(result, obj)
+
+    def test_get_method_with_invalid_id(self):
+        # Arrange
+        db = Database()
+        obj = MyObject(id=1, name="test")
+        db.add(obj)
+
+        # Act
+        result = db.get(MyObject, 2)
+
+        # Assert
+        self.assertIsNone(result)
+
+        def setUp(self):
+        self.storage = FileStorage()
+
+    def test_count_method_with_valid_class(self):
+        # Arrange
+        obj1 = MyObject(id=1, name="test1")
+        obj2 = MyObject(id=2, name="test2")
+        obj3 = MyOtherObject(id=3, name="test3")
+        self.storage.new(obj1)
+        self.storage.new(obj2)
+        self.storage.new(obj3)
+
+        # Act
+        result = self.storage.count(MyObject)
+
+        # Assert
+        self.assertEqual(result, 2)
+
+
+
+>>>>>>> Stashed changes
