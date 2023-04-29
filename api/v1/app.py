@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """ Module for app.py
-    This module creates an instance of Flask 
+    This module creates an instance of Flask
  """
 from flask import Flask, Blueprint, jsonify
 import os
@@ -22,10 +22,14 @@ app.register_blueprint(app_views)
 def teardown_appcontext(self):
     """ Method to handle teardown """
     storage.close()
+
+
+# declare a method to handle 404 errors
 @app.errorhandler(404)
-def not_found(error):
-    ''' handles 404 error and gives json formatted response '''
-    return make_response(jsonify({'error': 'Not found'}), 404)
+def page_not_found(error):
+    """ Method to handle 404 errors """
+    return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
