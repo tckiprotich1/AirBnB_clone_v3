@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ Module for __init.py__ """
-
-from flask import Flask, Blueprint, jsonify
 from api.v1.views.index import *
+from flask import Flask, Blueprint, jsonify
+
 
 """
 # create a variable app_views which is an instance of
