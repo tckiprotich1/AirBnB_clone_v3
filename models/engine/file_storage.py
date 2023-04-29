@@ -49,13 +49,13 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """Deserializes the JSON file to __objects."""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -68,33 +68,33 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-# Path: models/engine/db_storage.py
-# Compare this snippet from models/engine/db_storage.py:
-
-    def __init__(self, path):
-        self._path = path
-        self._data = {}
-
-    def add(self, obj):
-        cls_name = obj.__class__.__name__
-        if cls_name not in self._data:
-            self._data[cls_name] = {}
-        self._data[cls_name][obj.id] = obj
-        with open(self._path, 'w') as f:
-            json.dump(self._data, f)
 
     def get(self, cls, id):
-        with open(self._path, 'r') as f:
-            self._data = json.load(f)
-        if cls.__name__ in self._data and id in self._data[cls.__name__]:
-            return self._data[cls.__name__][id]
-        return None
+        """ retrieves one object """
+        obj_dict = {}
+        obj = None
+        if cls:
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if item.id == id:
+                    obj = item
+            return obj
 
     def count(self, cls=None):
-        with open(self._path, 'r') as f:
-            self._data = json.load(f)
-        if cls is not None:
-            if cls.__name__ in self._data:
-                return len(self._data[cls.__name__])
-            return 0
-        return sum(len(self._data[cls_name]) for cls_name in self._data)
+        """ counts number of objects of a class in storage """
+        if cls:
+            obj_list = []
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.CNC:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = FileStorage.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
