@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """ Module for index.py """
 from api.v1.views import app_views
 from flask import jsonify

@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """ Module for __init.py__ """
 
 from flask import Flask, Blueprint, jsonify
