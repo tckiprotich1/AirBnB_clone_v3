@@ -8,11 +8,13 @@ import os
 from models import storage
 # importing app_views from api.v1.views
 from api.v1.views import app_views
+from flask_cors import CORS
 
 app = Flask(__name__)
 
 # registering blueprint
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 """
 # declare a method to handle @app.teardown_appcontext
  that calls storage.close()"""
