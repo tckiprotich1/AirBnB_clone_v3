@@ -1,37 +1,33 @@
 #!/usr/bin/python3
+"""Defines flask aplications"""
 
-""" Module for app.py
-    This module creates an instance of Flask
- """
-from flask import Flask, Blueprint, jsonify
-import os
 from models import storage
-# importing app_views from api.v1.views
+from os import getenv
 from api.v1.views import app_views
+from flask import Flask, jsonify, abort
+from flask_cors import CORS
 
 app = Flask(__name__)
 
-# registering blueprint
+
 app.register_blueprint(app_views)
-"""
-# declare a method to handle @app.teardown_appcontext
- that calls storage.close()"""
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
+
+@app.errorhandler(404)
+def error_handler(error):
+    """Error handler, 404 response"""
+    response = jsonify({"error": "Not found"})
+    return response, 404
 
 
 @app.teardown_appcontext
-def teardown_appcontext(self):
-    """ Method to handle teardown """
+def teardown(exception):
+    """Close process"""
     storage.close()
 
 
-# declare a method to handle 404 errors
-@app.errorhandler(404)
-def page_not_found(error):
-    """ Method to handle 404 errors """
-    return jsonify({"error": "Not found"}), 404
-
-
 if __name__ == "__main__":
-    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.getenv('HBNB_API_PORT', 5000))
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = int(getenv('HBNB_API_PORT', default=5000))
     app.run(host=host, port=port, threaded=True)
