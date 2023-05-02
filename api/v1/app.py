@@ -6,6 +6,7 @@ from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort
 from flask_cors import CORS
+from flask import GET
 
 app = Flask(__name__)
 
